@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
 
+const IMP = window.IMP;
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  useEffect(() => {
+    IMP.init('imp14397622');
+  });
+
+  const handlePayment = () => {
+    IMP.request_pay(
+      {
+        pg: 'html5_inicis',
+        pay_method: 'card',
+        escrow: false,
+        merchant_uid: 'test_llg8qnxh',
+        name: '테스트 결제',
+        amount: 10,
+        buyer_tel: '010-0000-0000',
+      },
+      function (rsp) {
+        console.log(rsp);
+      }
+    );
+  };
+
+  return <button onClick={handlePayment}>결제하기</button>;
 }
 
 export default App;
